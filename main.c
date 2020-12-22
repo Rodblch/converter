@@ -1,15 +1,24 @@
 #include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-int main ()
-{
-    char currency[4][20] = {"EUR", "USD", "RUB", "BYN"};
-    int input;
-    int multiplicity;
-    float num, formula;
-    float cpRUB,cpEUR, cpBYN, output,qqq,cpUS;
 
-    multiplicity = 1;
+#define BYN 1.0
+#define RUB 0.034
+#define USD 2.52
+#define EUR 3.08
+
+char currency_type[4][20] = {"EUR", "USD", "RUB", "BYN"};
+float currency[4] = { 0 };
+
+/* Что бы избежать повторения одного и того же кода лучше перенести информацию в отдельную функцию */
+void display_currency(void) {
+    for(int i = 0; i < 4; ++i) {
+        printf("%.2f %s\n", currency[i], currency_type[i]);
+    }
+}
+
+int main (void) {
+
+    int input;
+    float num;
 
     do {
         printf("Какую валюту использвать?\n");
@@ -21,91 +30,60 @@ int main ()
 
         switch(input) {
             case 1:
-                cpBYN=1;
-                cpUS=0.4;
-                cpEUR=0.33;
-                cpRUB=29.27;
 
                 printf("Введите сколько хотите перевести лукашистких рублей\n");
                 scanf("%f", &num);
-                formula=(cpBYN*num); //BYN
-                printf("%.2f %s\n", formula, currency[3]);
 
+                currency[0] = num / (float)EUR;
+                currency[1] = num / (float)USD;
+                currency[2] = num / (float)RUB;
+                currency[3] = num;
 
-                formula=(cpUS*num); //USD
-                printf("%.2f %s\n", formula, currency[1]);
+                display_currency();
 
-                formula=(cpEUR*num); //EUR
-                printf("%.2f %s\n", formula, currency[0]);
-
-                formula=(cpRUB*num);
-                printf("%.2f %s\n", formula, currency[2]);
                 break;
             case 2:
-                cpBYN=3.42;
-                cpUS=1.36;
-                cpEUR=1.11;
-                cpRUB=100;
 
-                printf("Введите сколько хотите перевести путинских рублей\n");
+                printf("Введите сколько рублей хотите конвертировать\n");
                 scanf("%f", &num);
-                formula=(cpBYN*num)/100; //BYN
-                printf("%.2f %s\n", formula, currency[3]);
 
+                currency[0];
+                currency[1];
+                currency[2] = num;
+                currency[3];
 
-                formula=(cpUS*num)/100; //USD
-                printf("%.2f %s\n", formula, currency[1]);
-
-                formula=(cpEUR*num)/100; //EUR
-                printf("%.2f %s\n", formula, currency[0]);
-
-                formula=(cpRUB*num)/100; //RUS
-                printf("%.2f %s\n", formula, currency[2]);
                 break;
-            case 4: //ТУТ ЕВРО, Я ПРОСТО ОБОСРАЛСЯ. АААА
-                cpBYN=3.07;
-                cpUS=1.22;
-                cpEUR=1;
-                cpRUB=89.52;
 
-                printf("Pls enter numberki\n");
+            case 3:
+
+                printf("Введите сколько долларов хотите конвертировать\n");
                 scanf("%f", &num);
-                formula=(cpBYN*num); //BYN
-                printf("%.2f %s\n", formula, currency[3]);
 
+                currency[0];
+                currency[1] = num;
+                currency[2];
+                currency[3];
 
-                formula=(cpUS*num); //USD
-                printf("%.2f %s\n", formula, currency[1]);
-
-                formula=(cpEUR*num); //EUR
-                printf("%.2f %s\n", formula, currency[0]);
-
-                formula=(cpRUB*num);
-                printf("%.2f %s\n", formula, currency[2]);
                 break;
-                case 3:
-                cpBYN=2.51;
-                cpUS=1;
-                cpEUR=0.82;
-                cpRUB=73.38;
 
-                printf("Pls enter numberki\n");
+            case 4:
+
+                printf("Введите сколько евро хотите конвертировать\n");
                 scanf("%f", &num);
-                formula=(cpBYN*num); //BYN
-                printf("%.2f %s\n", formula, currency[3]);
 
+                currency[0] = num;
+                currency[1];
+                currency[2];
+                currency[3];
 
-                formula=(cpUS*num); //USD
-                printf("%.2f %s\n", formula, currency[1]);
+                break;
 
-                formula=(cpEUR*num); //EUR
-                printf("%.2f %s\n", formula, currency[0]);
-
-                formula=(cpRUB*num);
-                printf("%.2f %s\n", formula, currency[2]);
+            /* At any other digit, the program exits */
+            default:
+                printf("Exit\n");
                 break;
         }
-    } while (input <0);
+    } while (input < 0);
 
     return 0;
 }
